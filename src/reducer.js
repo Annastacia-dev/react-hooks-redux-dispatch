@@ -1,7 +1,7 @@
-let state = { count: 0 };
+let state;
 let action = { type: "counter/increment" };
 
-function changeState(state, action) {
+function reducer(state = { count: 0 }, action) {
   switch (action.type) {
     case "counter/increment":
       return { count: state.count + 1 };
@@ -11,20 +11,21 @@ function changeState(state, action) {
 }
 
 function dispatch(action){
-  state = changeState(state,action)
+  state = reducer(state,action)
   render()
 }
 
 function render () {
-   document.body.textContent = state.count
+    document.body.textContent = state.count
+    const button = document.createElement('button')
+    button.textContent = 'Increment'
+    button.addEventListener('click', () => {
+        dispatch(action)
+    })
+    document.body.appendChild(button)
 }
 
-
-
-dispatch(action)
-dispatch(action)
-dispatch(action)
-dispatch(action)
+dispatch({ type: "@@INIT" });
 
 
 
